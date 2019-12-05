@@ -1,4 +1,18 @@
-
+- [KAFKA知识储备](#kafka知识储备)
+    - [消息系统](#消息系统)
+        - [消息系统分类](#消息系统分类)
+            - [点对点消息传递](#点对点消息传递)
+            - [发布-订阅模式消息传递](#发布-订阅模式消息传递)
+        - [消息系统好处](#消息系统好处)
+    - [kafka](#kafka)
+        - [kafka 基础概念](#kafka-基础概念)
+        - [kafka架构原理](#kafka架构原理)
+            - [kafka 分布式](#kafka-分布式)
+            - [kafka topic 和 partition](#kafka-topic-和-partition)
+            - [kafka重平衡 rebalance 相关策略](#kafka重平衡-rebalance-相关策略)
+            - [kafka 副本机制](#kafka-副本机制)
+            - [kafka 日志存储](#kafka-日志存储)
+            - [kafka 应答保证](#kafka-应答保证)
 # KAFKA知识储备
 
 ## 消息系统
