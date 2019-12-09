@@ -1,7 +1,7 @@
 # 大数据方向知识点（自我记录和总结）
 
 ## 目录
-* [数据仓库理论知识.md](DataWarehouseKnowledge/数据仓库理论知识.md)
+* [数据仓库理论知识.md](DataWarehouseKnowledge/DWKnowledge.md)
 * [数据结构.md](DataStructure/数据结构.md)
 * [HBASE.md](HBASE/HBASE.md)
 * [HIVE.md](HIVE/HIVE.md)
