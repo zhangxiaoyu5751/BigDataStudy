@@ -21,6 +21,7 @@
       - [kafka ISR](#kafka-isr)
       - [kafka ack机制](#kafka-ack%e6%9c%ba%e5%88%b6)
       - [kafka zookeeper](#kafka-zookeeper)
+    - [kafka leader选举](#kafka-leader%e9%80%89%e4%b8%be)
 
 # KAFKA知识储备
 
@@ -182,3 +183,6 @@ Topic在逻辑上可以被认为是一个queue，每条消费都必须指定它�
     * [KAFKAAck.md](./detailKnowledge/kafkaAck.md)
 #### kafka zookeeper
     * [kafkaZookeeper.md](./detailKnowledge/kafkaZookeeper.md)
+
+### kafka leader选举
+    *[kafka leader选举.md](./detailKnowledge/kafkaLeaderSelection.md)
