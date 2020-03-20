@@ -22,6 +22,9 @@
       - [kafka ack机制](#kafka-ack%e6%9c%ba%e5%88%b6)
       - [kafka zookeeper](#kafka-zookeeper)
     - [kafka leader选举](#kafka-leader%e9%80%89%e4%b8%be)
+    - [如何保证kafka幂等性，数据只被消费一次](#%e5%a6%82%e4%bd%95%e4%bf%9d%e8%af%81kafka%e5%b9%82%e7%ad%89%e6%80%a7%e6%95%b0%e6%8d%ae%e5%8f%aa%e8%a2%ab%e6%b6%88%e8%b4%b9%e4%b8%80%e6%ac%a1)
+    - [如何保证kakfa数据不丢失](#%e5%a6%82%e4%bd%95%e4%bf%9d%e8%af%81kakfa%e6%95%b0%e6%8d%ae%e4%b8%8d%e4%b8%a2%e5%a4%b1)
+    - [如何保证kakfa](#%e5%a6%82%e4%bd%95%e4%bf%9d%e8%af%81kakfa)
 
 # KAFKA知识储备
 
@@ -186,3 +189,10 @@ Topic在逻辑上可以被认为是一个queue，每条消费都必须指定它�
 
 ### kafka leader选举
     *[kafka leader选举.md](./detailKnowledge/kafkaLeaderSelection.md)
+
+### 如何保证kafka幂等性，数据只被消费一次
+    *【[123.md](./detailKnowledge/kafka幂等性.md)
+
+### 如何保证kakfa数据不丢失
+
+### 如何保证kakfa
