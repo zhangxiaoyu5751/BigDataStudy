@@ -112,11 +112,16 @@ client 什么时候更新呢？ client会根据缓存访问，如果发生错误
 
 compact分为两种：
 - minor_compact.  
-    minor_compact 只是用来作部分文件的合并以及包括minVersion=0并且设置ttl的过期版本清理。不做任何删除数据，多版本数据的清理工作。
-- major_compact 对region下的store下的所有storefile执行合并操作，最终的结果会整理合并出一个文件。
+    minor_compact 只是用来作部分文件的合并
+- major_compact 对region下的store下的所有storefile执行合并操作包括删除，超过ttl的数据，最终的结果会整理合并出一个文件。
+
+什么时候执行compact呢：(调用compact的时候会自动决定执行哪种compact)
+- memstore 刷新到磁盘上的时候
+- 用户调用相关api的时候
+- hbase自己周期性检查的时候
   
 
-Client 写入 -> 存入 MemStore，一直到 MemStore 满 -> Flush 成一个 StoreFile，直至增长到 一定阈值 -> 触发 Compact 合并操作 -> 多个 StoreFile 合并成一个 StoreFile，同时进行版本 合并和数据删除 -> 当StoreFilesCompact后，逐步形成越来越大的StoreFile-> 单个StoreFile大小超过一定阈值后，触发 Split 操作，把当前 Region Split 成 2 个 Region，Region 会下线， 新 Split 出的 2 个孩子 Region 会被 HMaster 分配到相应的 HRegionServer 上，使得原先 1 个Region 的压力得以分流到 2 个 Region 上
+Client 写入 -> 存入 MemStore，一直到 MemStore 满 -> Flush 成一个 StoreFile，多个storefile 文件达到一定大小增长到 一定阈值 -> 触发 Compact 合并操作 -> 多个 StoreFile 合并成一个 StoreFile，同时进行版本 合并和数据删除 -> 当StoreFilesCompact后，逐步形成越来越大的StoreFile-> 单个StoreFile大小超过一定阈值后，触发 Split 操作，把当前 Region Split 成 2 个 Region，Region 会下线， 新 Split 出的 2 个孩子 Region 会被 HMaster 分配到相应的 HRegionServer 上，使得原先 1 个Region 的压力得以分流到 2 个 Region 上
 
 **hbase只是增加数据，所有的更新和删除数据，都是在compact操作的**
 

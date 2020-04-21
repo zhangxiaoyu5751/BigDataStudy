@@ -50,7 +50,7 @@ consumer group下面有多个consumer。对于每个consumer group，kafka会为
 
 节点内容就是Offset的值。
 
-早期版本的 kafka 用 zk 做 meta 信息存储，consumer 的消费状态，group 的管理以及 offset的值。考虑到zk本身的一些因素以及整个架构较大概率存在单点问题，新版本中确实逐渐弱化了zookeeper的作用。新的consumer使用了kafka内部的group coordination协议，也减少了对zookeeper的依赖
+早期版本的 kafka 用 zk 做 meta 信息存储，consumer 的消费状态，group 的管理以及 offset的值。考虑到zk本身的一些因素以及整个架构较大概率存在单点问题，新版本中确实逐渐弱化了zookeeper的作用。新的consumer使用了kafka内部的group coordination协议，也减少了对zookeeper的依赖 而是存在了broker服务器上。Kafka版本[0.10.1.1]，已默认将消费的 offset 迁入到了 Kafka 一个名为 __consumer_offsets 的Topic中。
 
 
 

@@ -25,6 +25,7 @@
     - [如何保证kafka幂等性，数据只被消费一次](#%e5%a6%82%e4%bd%95%e4%bf%9d%e8%af%81kafka%e5%b9%82%e7%ad%89%e6%80%a7%e6%95%b0%e6%8d%ae%e5%8f%aa%e8%a2%ab%e6%b6%88%e8%b4%b9%e4%b8%80%e6%ac%a1)
     - [如何保证kakfa数据不丢失](#%e5%a6%82%e4%bd%95%e4%bf%9d%e8%af%81kakfa%e6%95%b0%e6%8d%ae%e4%b8%8d%e4%b8%a2%e5%a4%b1)
     - [如何保证kakfa](#%e5%a6%82%e4%bd%95%e4%bf%9d%e8%af%81kakfa)
+    - [kafka为什么这么快](#kafka%e4%b8%ba%e4%bb%80%e4%b9%88%e8%bf%99%e4%b9%88%e5%bf%ab)
 
 # KAFKA知识储备
 
@@ -196,3 +197,35 @@ Topic在逻辑上可以被认为是一个queue，每条消费都必须指定它�
 ### 如何保证kakfa数据不丢失
 
 ### 如何保证kakfa
+
+
+### kafka为什么这么快
+
+https://juejin.im/post/5cd2db8951882530b11ee976
+
+首先，
+1. 是磁盘顺序写入
+2. memory mapped files。内存映射文件。直接利用操作系统的page来实现文件到物理内存的映射，完成映射后，对物理内存的操作会被同步到磁盘上
+3. 读取数据的时候基于sendfile实现zero copy 
+```
+传统模式下，当需要对一个文件进行传输的时候，其具体流程细节如下：
+1. 调用read函数，文件数据被copy到内核缓冲区
+2. read函数返回，文件数据从内核缓冲区copy到用户缓冲区
+3. write函数调用，将文件数据从用户缓冲区copy到内核与socket相关的缓冲区。
+4. 数据从socket缓冲区copy到相关协议引擎。
+```
+在这个过程中，经历了4次copy操作。引入sendfile之后，
+```
+运行流程如下：
+
+1. sendfile系统调用，文件数据被copy至内核缓冲区
+2. 再从内核缓冲区copy至内核中socket相关的缓冲区
+3. 最后再socket相关的缓冲区copy到协议引擎
+```
+减少copy
+4.  进行了批量压缩 将多个消息一起进行压缩 可以使用snappy 或者gzip压缩
+
+总结：
+kafka快的秘诀在于，他把所有文件都变成了一个批量的文件，进行合理的压缩，减少网络IO损耗，然后通过mmfile提高IO速度，写入文件的时候是在每个partition追加，速度最优，读取的时候是配合sendfile直接暴力输出。
+
+

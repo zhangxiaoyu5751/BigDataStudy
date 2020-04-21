@@ -1,0 +1,9 @@
+# pyspark运行架构
+首先，spark使用scala编写的，是有jvm语言实现的，那么spark是如何支持python的呢？
+
+为了不破坏spark本身的运行架构，spark在外层包了一层python api。借助py4j实现python和java的交互。具体细分为driver端和executor端。
+
+- driver端，通过py4j实现在python中调用java方法，把用户写的pyspark映射到jvm当中，比如实例化sparkcontext
+driver执行的就是除了RDD算子中的代码块以外的所有代码块。先是执行代码，然后碰到action算子，然后通过action算子划分DAG图，然后把具体执行的算子分配到executor上。（不对rdd操作的也在driver执行，不过是计算一次，执行一次）
+
+- executor端，不需要py4j，因为executor端运行的task的逻辑是driver发送过来的，是序列化后的字节码，为了能在executor端运行，为每个task启动一个python进程，通过socket通信方式把python方法和数据发送到python进程运行。然后把处理结果返回到executor当中。 

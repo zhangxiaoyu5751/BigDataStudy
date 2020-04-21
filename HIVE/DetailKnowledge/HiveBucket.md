@@ -43,8 +43,18 @@ CREATE TABLE my_user
 clustered by(id) sorted by (uid) into 21buckets
 stored as textfile
 ```
-这样一来，两边bucket做局部join的时候，只需要用类似merge sort算法的merge操作一样，把两个bucker顺序遍历一遍就可以完成，这样甚至不用把一个bucket完整的家在城hashtable，而且可以做全连接操作。
+这样一来，两边bucket做局部join的时候，只需要用类似merge sort算法的merge操作一样，把两个bucker顺序遍历一遍就可以完成，这样甚至不用把一个bucket完整的加载成hashtable，而且可以做全连接操作。
+
 运行sort merge bucket map join时，需要设置的属性为：
 set hive.optimize.bucketmapjoin=true;
+
 set hive,optimize.bucketmapjoin.sortedmerge=true;
+
 set hive.input.format=org.apache.hadoop.hive.ql.io.bucketizedHiveInputFormat;
+
+
+https://www.cnblogs.com/ggjucheng/archive/2013/01/03/2842821.html
+
+https://www.aboutyun.com/thread-12880-1-1.html
+
+http://www.360doc.com/content/18/0412/16/14808334_745066516.shtml

@@ -1,0 +1,10 @@
+*.py[cod]
+*.so
+*.egg
+*.sw[po]
+*.egg-info
+.idea/
+.vscode/
+*.log
+*.DS_Store
+venv/
