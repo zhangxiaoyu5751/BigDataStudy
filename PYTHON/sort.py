@@ -83,6 +83,11 @@ class SortMethod(object):
         self.quick_sort(data_list, left, low)
         self.quick_sort(data_list, low+1, right)
 
+
+
+
+
+
     
     # 二分查找
     def binary_search(self, data_list, num):
