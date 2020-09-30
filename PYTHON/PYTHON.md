@@ -14,6 +14,8 @@
 ```python
 def func(step):
     num = 1
+
+    
     def func2():
         nonlocal num
         num = num + step

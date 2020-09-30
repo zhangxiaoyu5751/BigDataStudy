@@ -1,3 +1,4 @@
+
 def HASH(object):
     def __init__(self):
         self.hashtable = [[None,None] for i in range(11)]
